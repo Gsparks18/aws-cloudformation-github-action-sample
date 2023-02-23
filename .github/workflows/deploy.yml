@@ -23,17 +23,16 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - name: Checkout code from master branch
+    - name: Checkout code from master branch
+       uses: actions/checkout@v3
+        # Install AWS client
+    - name: Install AWS Client
         uses: actions/checkout@v3
-
+        curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+        unzip awscliv2.zip
+        sudo ./aws/install || true
       # Configure AWS Credential
-      - name: Install AWS Client
-        run: |
-          curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-          unzip awscliv2.zip
-          sudo ./aws/install || true
-          aws --version
-      - name: Configure AWS Credentials
+    - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1-node16
         with:
           aws-access-key-id: ${{ secrets.ACCESS_KEY }}
@@ -41,7 +40,7 @@ jobs:
           aws-region: ${{ github.event.inputs.region }}
 
       # Deploy to AWS CloudFormation
-      - name: Deploy to AWS CloudFormation
+    - name: Deploy to AWS CloudFormation
         uses: aws-actions/aws-cloudformation-github-deploy@v1
         with:
           name: tekloon-test-stack
