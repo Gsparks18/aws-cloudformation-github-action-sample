@@ -28,7 +28,7 @@ jobs:
 
       # Configure AWS Credential
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v1-node16
         with:
           aws-access-key-id: ${{ secrets.ACCESS_KEY }}
           aws-secret-access-key: ${{ secrets.ACCESS_KEY_SECRET }}
@@ -36,7 +36,7 @@ jobs:
 
       # Deploy to AWS CloudFormation
       - name: Deploy to AWS CloudFormation
-        uses: aws-actions/aws-cloudformation-github-deploy@v1
+        uses: aws-actions/aws-cloudformation-github-deploy@v1-node16
         with:
           name: tekloon-test-stack
           template: test-stack.yaml
